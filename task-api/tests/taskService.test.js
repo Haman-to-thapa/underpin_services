@@ -75,6 +75,19 @@ describe('Task Service', () => {
         expect(removed).toBe(true);
         expect(taskService.findById(task.id)).toBeUndefined();
     });
+    test('should complete a task', () => {
+        const task = taskService.create({
+            title: 'Complete this task',
+            priority: 'high',
+        });
+
+        const completedTask = taskService.completeTask(task.id);
+
+        expect(completedTask.status).toBe('done');
+        expect(completedTask.completedAt).not.toBeNull();
+        expect(completedTask.id).toBe(task.id);
+    });
+
 });
 
 
