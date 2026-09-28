@@ -99,6 +99,12 @@ describe('Task Service', () => {
         expect(foundTask.id).toBe(task.id);
         expect(foundTask.title).toBe('Find this task');
     });
+
+    test('should return undefined for a non-existent task', () => {
+        const task = taskService.findById('invalid-task-id');
+
+        expect(task).toBeUndefined();
+    });
 });
 
 
