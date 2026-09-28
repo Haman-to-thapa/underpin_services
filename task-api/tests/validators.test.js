@@ -94,4 +94,12 @@ describe('Task Validators', () => {
 
         expect(error).toBe('status must be one of: todo, in_progress, done');
     });
+
+    test('should reject an invalid priority during update', () => {
+        const error = validateUpdateTask({
+            priority: 'invalid_priority',
+        });
+
+        expect(error).toBe('priority must be one of: low, medium, high');
+    });
 });
