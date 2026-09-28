@@ -49,6 +49,22 @@ describe('Task Service', () => {
         expect(tasks[0].title).toBe('Task 1');
         expect(tasks[1].title).toBe('Task 3');
     });
+
+    test('should update a task', () => {
+        const task = taskService.create({
+            title: 'Learn Jest',
+            priority: 'medium',
+        });
+
+        const updatedTask = taskService.update(task.id, {
+            title: 'Learn Jest Properly',
+            priority: 'high',
+        });
+
+        expect(updatedTask.title).toBe('Learn Jest Properly');
+        expect(updatedTask.priority).toBe('high');
+        expect(updatedTask.id).toBe(task.id);
+    });
 });
 
 
