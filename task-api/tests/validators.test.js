@@ -86,4 +86,12 @@ describe('Task Validators', () => {
 
         expect(error).toBe('title must be a non-empty string');
     });
+
+    test('should reject an invalid status during update', () => {
+        const error = validateUpdateTask({
+            status: 'invalid_status',
+        });
+
+        expect(error).toBe('status must be one of: todo, in_progress, done');
+    });
 });
