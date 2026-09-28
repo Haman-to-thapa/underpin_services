@@ -14,4 +14,11 @@ describe('Task Validators', () => {
 
         expect(error).toBeNull();
     });
+    test('should reject a task without a title', () => {
+        const error = validateCreateTask({
+            priority: 'high',
+        });
+
+        expect(error).toBe('title is required and must be a non-empty string');
+    });
 });
