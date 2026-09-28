@@ -26,6 +26,29 @@ describe('Task Service', () => {
         expect(tasks[0].title).toBe('Task 1');
         expect(tasks[1].title).toBe('Task 2');
     });
+
+    test('should return tasks by status', () => {
+        taskService.create({
+            title: 'Task 1',
+            status: 'todo',
+        });
+
+        taskService.create({
+            title: 'Task 2',
+            status: 'done',
+        });
+
+        taskService.create({
+            title: 'Task 3',
+            status: 'todo',
+        });
+
+        const tasks = taskService.getByStatus('todo');
+
+        expect(tasks).toHaveLength(2);
+        expect(tasks[0].title).toBe('Task 1');
+        expect(tasks[1].title).toBe('Task 3');
+    });
 });
 
 
