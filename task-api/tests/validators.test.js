@@ -102,4 +102,12 @@ describe('Task Validators', () => {
 
         expect(error).toBe('priority must be one of: low, medium, high');
     });
+
+    test('should reject an invalid priority during update', () => {
+        const error = validateUpdateTask({
+            priority: 'invalid_priority',
+        });
+
+        expect(error).toBe('priority must be one of: low, medium, high');
+    });
 });
