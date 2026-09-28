@@ -65,6 +65,16 @@ describe('Task Service', () => {
         expect(updatedTask.priority).toBe('high');
         expect(updatedTask.id).toBe(task.id);
     });
+    test('should remove a task', () => {
+        const task = taskService.create({
+            title: 'Task to delete',
+        });
+
+        const removed = taskService.remove(task.id);
+
+        expect(removed).toBe(true);
+        expect(taskService.findById(task.id)).toBeUndefined();
+    });
 });
 
 
