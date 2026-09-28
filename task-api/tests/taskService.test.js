@@ -105,6 +105,22 @@ describe('Task Service', () => {
 
         expect(task).toBeUndefined();
     });
+
+    test('should return null when updating a non-existent task', () => {
+        const updatedTask = taskService.update('invalid-task-id', {
+            title: 'Updated task',
+        });
+
+        expect(updatedTask).toBeNull();
+    });
+
+    test('should return false when removing a non-existent task', () => {
+        const removed = taskService.remove('invalid-task-id');
+
+        expect(removed).toBe(false);
+    });
 });
+
+
 
 
