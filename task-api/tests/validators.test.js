@@ -47,4 +47,13 @@ describe('Task Validators', () => {
 
         expect(error).toBe('priority must be one of: low, medium, high');
     });
+
+    test('should reject an invalid dueDate', () => {
+        const error = validateCreateTask({
+            title: 'Learn Jest',
+            dueDate: 'not-a-date',
+        });
+
+        expect(error).toBe('dueDate must be a valid ISO date string');
+    });
 });
