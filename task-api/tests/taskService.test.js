@@ -119,6 +119,29 @@ describe('Task Service', () => {
 
         expect(removed).toBe(false);
     });
+    test('should return correct task statistics', () => {
+        taskService.create({
+            title: 'Todo task',
+            status: 'todo',
+        });
+
+        taskService.create({
+            title: 'In progress task',
+            status: 'in_progress',
+        });
+
+        taskService.create({
+            title: 'Completed task',
+            status: 'done',
+        });
+
+        const stats = taskService.getStats();
+
+        expect(stats.todo).toBe(1);
+        expect(stats.in_progress).toBe(1);
+        expect(stats.done).toBe(1);
+        expect(stats.overdue).toBe(0);
+    });
 });
 
 
