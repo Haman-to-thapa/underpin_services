@@ -21,4 +21,12 @@ describe('Task Validators', () => {
 
         expect(error).toBe('title is required and must be a non-empty string');
     });
+    test('should reject a task with an empty title', () => {
+        const error = validateCreateTask({
+            title: '   ',
+            priority: 'high',
+        });
+
+        expect(error).toBe('title is required and must be a non-empty string');
+    });
 });
