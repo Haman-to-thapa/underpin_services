@@ -67,4 +67,15 @@ describe('Task Validators', () => {
 
         expect(error).toBeNull();
     });
+
+    test('should accept valid update task data', () => {
+        const error = validateUpdateTask({
+            title: 'Updated Task',
+            status: 'in_progress',
+            priority: 'high',
+            dueDate: '2026-10-15T00:00:00.000Z',
+        });
+
+        expect(error).toBeNull();
+    });
 });
