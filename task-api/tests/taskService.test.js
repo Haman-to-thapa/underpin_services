@@ -88,6 +88,17 @@ describe('Task Service', () => {
         expect(completedTask.id).toBe(task.id);
     });
 
+    test('should find a task by id', () => {
+        const task = taskService.create({
+            title: 'Find this task',
+        });
+
+        const foundTask = taskService.findById(task.id);
+
+        expect(foundTask).toBeDefined();
+        expect(foundTask.id).toBe(task.id);
+        expect(foundTask.title).toBe('Find this task');
+    });
 });
 
 
