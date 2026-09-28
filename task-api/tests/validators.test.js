@@ -38,4 +38,13 @@ describe('Task Validators', () => {
 
         expect(error).toBe('status must be one of: todo, in_progress, done');
     });
+
+    test('should reject an invalid priority', () => {
+        const error = validateCreateTask({
+            title: 'Learn Jest',
+            priority: 'invalid_priority',
+        });
+
+        expect(error).toBe('priority must be one of: low, medium, high');
+    });
 });
