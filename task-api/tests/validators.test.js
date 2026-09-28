@@ -78,4 +78,12 @@ describe('Task Validators', () => {
 
         expect(error).toBeNull();
     });
+
+    test('should reject an empty title during update', () => {
+        const error = validateUpdateTask({
+            title: '   ',
+        });
+
+        expect(error).toBe('title must be a non-empty string');
+    });
 });
