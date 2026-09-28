@@ -7,11 +7,11 @@ describe('Task Service', () => {
 
     test('should create a task', () => {
         const task = taskService.create({
-            title: 'Task 1',
-            priority: "Learn Jest",
+            title: 'Learn Jest',
+            priority: 'high',
         });
 
         expect(task.title).toBe('Learn Jest');
-        expect(task.priority).toBe('high')
-    })
-})
+        expect(task.priority).toBe('high');
+    });
+});
