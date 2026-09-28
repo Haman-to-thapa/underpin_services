@@ -142,6 +142,25 @@ describe('Task Service', () => {
         expect(stats.done).toBe(1);
         expect(stats.overdue).toBe(0);
     });
+
+    test('should count overdue tasks', () => {
+        taskService.create({
+            title: 'Overdue task',
+            status: 'todo',
+            dueDate: '2020-01-01T00:00:00.000Z',
+        });
+
+        taskService.create({
+            title: 'Future task',
+            status: 'todo',
+            dueDate: '2099-01-01T00:00:00.000Z',
+        });
+
+        const stats = taskService.getStats();
+
+        expect(stats.overdue).toBe(1);
+    });
+
 });
 
 
