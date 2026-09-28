@@ -29,4 +29,13 @@ describe('Task Validators', () => {
 
         expect(error).toBe('title is required and must be a non-empty string');
     });
+
+    test('should reject an invalid status', () => {
+        const error = validateCreateTask({
+            title: 'Learn Jest',
+            status: 'invalid_status',
+        });
+
+        expect(error).toBe('status must be one of: todo, in_progress, done');
+    });
 });
