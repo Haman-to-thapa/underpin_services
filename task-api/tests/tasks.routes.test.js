@@ -30,4 +30,18 @@ describe('Task API Routes', () => {
         expect(response.body.status).toBe('todo');
         expect(response.body.id).toBeDefined();
     });
+
+    test('POST /tasks should reject a task without a title', async () => {
+        const response = await request(app)
+            .post('/tasks')
+            .send({
+                description: 'Task without title',
+                priority: 'high',
+            });
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.error).toBe(
+            'title is required and must be a non-empty string'
+        );
+    });
 });
