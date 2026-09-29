@@ -329,4 +329,29 @@ describe('Task API Routes', () => {
         expect(response.statusCode).toBe(404);
         expect(response.body.error).toBe('Task not found');
     });
+
+    test('PATCH /tasks/:id/assign should allow reassignment', async () => {
+        const createResponse = await request(app)
+            .post('/tasks')
+            .send({
+                title: 'Reassign task',
+            });
+
+        const taskId = createResponse.body.id;
+
+        await request(app)
+            .patch(`/tasks/${taskId}/assign`)
+            .send({
+                assignee: 'Rahul',
+            });
+
+        const response = await request(app)
+            .patch(`/tasks/${taskId}/assign`)
+            .send({
+                assignee: 'Heman',
+            });
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body.assignee).toBe('Heman');
+    });
 });
