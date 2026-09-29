@@ -180,4 +180,24 @@ describe('Task API Routes', () => {
         expect(response.statusCode).toBe(404);
         expect(response.body.error).toBe('Task not found');
     });
+
+    test('DELETE /tasks/:id should remove an existing task', async () => {
+        const createResponse = await request(app)
+            .post('/tasks')
+            .send({
+                title: 'Task to Delete',
+            });
+
+        const taskId = createResponse.body.id;
+
+        const deleteResponse = await request(app)
+            .delete(`/tasks/${taskId}`);
+
+        expect(deleteResponse.statusCode).toBe(204);
+
+        const getResponse = await request(app).get('/tasks');
+
+        expect(getResponse.statusCode).toBe(200);
+        expect(getResponse.body).toHaveLength(0);
+    });
 });
