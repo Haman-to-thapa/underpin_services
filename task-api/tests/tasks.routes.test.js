@@ -13,4 +13,21 @@ describe('Task API Routes', () => {
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([]);
     });
+
+    test('POST /tasks should create a new task', async () => {
+        const response = await request(app)
+            .post('/tasks')
+            .send({
+                title: 'Learn Supertest',
+                description: 'Practice API testing',
+                priority: 'high',
+            });
+
+        expect(response.statusCode).toBe(201);
+        expect(response.body.title).toBe('Learn Supertest');
+        expect(response.body.description).toBe('Practice API testing');
+        expect(response.body.priority).toBe('high');
+        expect(response.body.status).toBe('todo');
+        expect(response.body.id).toBeDefined();
+    });
 });
