@@ -92,4 +92,27 @@ describe('Task API Routes', () => {
         expect(response.body[0].title).toBe('Todo Task');
         expect(response.body[0].status).toBe('todo');
     });
+
+    test('GET /tasks?page=1&limit=2 should return the first two tasks', async () => {
+        await request(app)
+            .post('/tasks')
+            .send({ title: 'Task 1' });
+
+        await request(app)
+            .post('/tasks')
+            .send({ title: 'Task 2' });
+
+        await request(app)
+            .post('/tasks')
+            .send({ title: 'Task 3' });
+
+        const response = await request(app)
+            .get('/tasks')
+            .query({ page: 1, limit: 2 });
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toHaveLength(2);
+        expect(response.body[0].title).toBe('Task 1');
+        expect(response.body[1].title).toBe('Task 2');
+    });
 });
