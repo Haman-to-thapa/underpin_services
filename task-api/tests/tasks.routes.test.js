@@ -208,4 +208,23 @@ describe('Task API Routes', () => {
         expect(response.statusCode).toBe(404);
         expect(response.body.error).toBe('Task not found');
     });
+
+    test('PATCH /tasks/:id/complete should complete a task', async () => {
+        const createResponse = await request(app)
+            .post('/tasks')
+            .send({
+                title: 'Task to Complete',
+                priority: 'high',
+            });
+
+        const taskId = createResponse.body.id;
+
+        const response = await request(app)
+            .patch(`/tasks/${taskId}/complete`);
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body.id).toBe(taskId);
+        expect(response.body.status).toBe('done');
+        expect(response.body.completedAt).not.toBeNull();
+    });
 });
