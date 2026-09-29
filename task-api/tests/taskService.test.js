@@ -175,8 +175,19 @@ describe('Task Service', () => {
         expect(stats.overdue).toBe(0);
     });
 
+    test('should assign a task', () => {
+        const task = taskService.create({
+            title: 'Assign me',
+        });
+
+        const updatedTask = taskService.assignTask(
+            task.id,
+            'Heman'
+        );
+
+        expect(updatedTask.id).toBe(task.id);
+        expect(updatedTask.assignee).toBe('Heman')
+
+    });
+
 });
-
-
-
-
