@@ -115,4 +115,35 @@ describe('Task API Routes', () => {
         expect(response.body[0].title).toBe('Task 1');
         expect(response.body[1].title).toBe('Task 2');
     });
+
+    test('GET /tasks/stats should return task statistics', async () => {
+        await request(app)
+            .post('/tasks')
+            .send({
+                title: 'Todo Task',
+                status: 'todo',
+            });
+
+        await request(app)
+            .post('/tasks')
+            .send({
+                title: 'In Progress Task',
+                status: 'in_progress',
+            });
+
+        await request(app)
+            .post('/tasks')
+            .send({
+                title: 'Completed Task',
+                status: 'done',
+            });
+
+        const response = await request(app).get('/tasks/stats');
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body.todo).toBe(1);
+        expect(response.body.in_progress).toBe(1);
+        expect(response.body.done).toBe(1);
+        expect(response.body.overdue).toBe(0);
+    });
 });
