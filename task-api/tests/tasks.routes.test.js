@@ -318,4 +318,15 @@ describe('Task API Routes', () => {
             'assignee must be a non-empty string'
         );
     });
+
+    test('PATCH /tasks/:id/assign should return 404 for a non-existent task', async () => {
+        const response = await request(app)
+            .patch('/tasks/non-existent-id/assign')
+            .send({
+                assignee: 'Heman',
+            });
+
+        expect(response.statusCode).toBe(404);
+        expect(response.body.error).toBe('Task not found');
+    });
 });
