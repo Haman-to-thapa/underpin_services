@@ -161,6 +161,20 @@ describe('Task Service', () => {
         expect(stats.overdue).toBe(1);
     });
 
+    test('should ignore unknown statuses in task statistics', () => {
+        taskService.create({
+            title: 'Unknown status task',
+            status: 'unknown',
+        });
+
+        const stats = taskService.getStats();
+
+        expect(stats.todo).toBe(0);
+        expect(stats.in_progress).toBe(0);
+        expect(stats.done).toBe(0);
+        expect(stats.overdue).toBe(0);
+    });
+
 });
 
 
