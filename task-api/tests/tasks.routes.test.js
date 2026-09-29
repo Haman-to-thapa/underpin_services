@@ -146,4 +146,27 @@ describe('Task API Routes', () => {
         expect(response.body.done).toBe(1);
         expect(response.body.overdue).toBe(0);
     });
+
+    test('PUT /tasks/:id should update an existing task', async () => {
+        const createResponse = await request(app)
+            .post('/tasks')
+            .send({
+                title: 'Original Task',
+                priority: 'low',
+            });
+
+        const taskId = createResponse.body.id;
+
+        const response = await request(app)
+            .put(`/tasks/${taskId}`)
+            .send({
+                title: 'Updated Task',
+                priority: 'high',
+            });
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body.id).toBe(taskId);
+        expect(response.body.title).toBe('Updated Task');
+        expect(response.body.priority).toBe('high');
+    });
 });
