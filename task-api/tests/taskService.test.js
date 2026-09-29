@@ -190,4 +190,13 @@ describe('Task Service', () => {
 
     });
 
+    test('should return null when assigning a non-existent task', () => {
+        const result = taskService.assignTask(
+            'invalid-task-id',
+            'Heman'
+        );
+
+        expect(result).toBeNull();
+    });
+
 });
