@@ -254,4 +254,26 @@ describe('Task API Routes', () => {
         expect(response.statusCode).toBe(400);
         expect(response.body.error).toBe('title must be a non-empty string');
     });
+
+    test('GET /tasks should use default pagination values for invalid input', async () => {
+        await request(app)
+            .post('/tasks')
+            .send({ title: 'Task 1' });
+
+        await request(app)
+            .post('/tasks')
+            .send({ title: 'Task 2' });
+
+        const response = await request(app)
+            .get('/tasks')
+            .query({
+                page: 'invalid',
+                limit: 'invalid',
+            });
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toHaveLength(2);
+        expect(response.body[0].title).toBe('Task 1');
+        expect(response.body[1].title).toBe('Task 2');
+    });
 });
