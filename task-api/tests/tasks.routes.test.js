@@ -44,4 +44,27 @@ describe('Task API Routes', () => {
             'title is required and must be a non-empty string'
         );
     });
+
+    test('GET /tasks should return all tasks', async () => {
+        await request(app)
+            .post('/tasks')
+            .send({
+                title: 'Task 1',
+                priority: 'high',
+            });
+
+        await request(app)
+            .post('/tasks')
+            .send({
+                title: 'Task 2',
+                priority: 'low',
+            });
+
+        const response = await request(app).get('/tasks');
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toHaveLength(2);
+        expect(response.body[0].title).toBe('Task 1');
+        expect(response.body[1].title).toBe('Task 2');
+    });
 });
