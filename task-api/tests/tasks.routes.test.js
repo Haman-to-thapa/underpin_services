@@ -227,4 +227,12 @@ describe('Task API Routes', () => {
         expect(response.body.status).toBe('done');
         expect(response.body.completedAt).not.toBeNull();
     });
+
+    test('PATCH /tasks/:id/complete should return 404 for a non-existent task', async () => {
+        const response = await request(app)
+            .patch('/tasks/non-existent-id/complete');
+
+        expect(response.statusCode).toBe(404);
+        expect(response.body.error).toBe('Task not found');
+    });
 });
