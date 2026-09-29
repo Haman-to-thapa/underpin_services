@@ -276,4 +276,46 @@ describe('Task API Routes', () => {
         expect(response.body[0].title).toBe('Task 1');
         expect(response.body[1].title).toBe('Task 2');
     });
+
+
+    test('PATCH /tasks/:id/assign should assign a task', async () => {
+        const createResponse = await request(app)
+            .post('/tasks')
+            .send({
+                title: 'Task to Assign',
+            });
+
+        const taskId = createResponse.body.id;
+
+        const response = await request(app)
+            .patch(`/tasks/${taskId}/assign`)
+            .send({
+                assignee: 'Heman',
+            });
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body.id).toBe(taskId);
+        expect(response.body.assignee).toBe('Heman');
+    });
+
+    test('PATCH /tasks/:id/assign should reject an empty assignee', async () => {
+        const createResponse = await request(app)
+            .post('/tasks')
+            .send({
+                title: 'Task with empty assignee',
+            });
+
+        const taskId = createResponse.body.id;
+
+        const response = await request(app)
+            .patch(`/tasks/${taskId}/assign`)
+            .send({
+                assignee: '   ',
+            });
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.error).toBe(
+            'assignee must be a non-empty string'
+        );
+    });
 });
