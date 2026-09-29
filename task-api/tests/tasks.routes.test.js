@@ -169,4 +169,15 @@ describe('Task API Routes', () => {
         expect(response.body.title).toBe('Updated Task');
         expect(response.body.priority).toBe('high');
     });
+
+    test('PUT /tasks/:id should return 404 for a non-existent task', async () => {
+        const response = await request(app)
+            .put('/tasks/non-existent-id')
+            .send({
+                title: 'Updated Task',
+            });
+
+        expect(response.statusCode).toBe(404);
+        expect(response.body.error).toBe('Task not found');
+    });
 });
