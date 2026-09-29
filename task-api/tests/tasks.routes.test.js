@@ -235,4 +235,23 @@ describe('Task API Routes', () => {
         expect(response.statusCode).toBe(404);
         expect(response.body.error).toBe('Task not found');
     });
+
+    test('PUT /tasks/:id should return 400 for invalid update data', async () => {
+        const createResponse = await request(app)
+            .post('/tasks')
+            .send({
+                title: 'Original Task',
+            });
+
+        const taskId = createResponse.body.id;
+
+        const response = await request(app)
+            .put(`/tasks/${taskId}`)
+            .send({
+                title: '   ',
+            });
+
+        expect(response.statusCode).toBe(400);
+        expect(response.body.error).toBe('title must be a non-empty string');
+    });
 });
