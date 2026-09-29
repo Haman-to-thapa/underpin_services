@@ -67,4 +67,29 @@ describe('Task API Routes', () => {
         expect(response.body[0].title).toBe('Task 1');
         expect(response.body[1].title).toBe('Task 2');
     });
+
+    test('GET /tasks?status=todo should return only todo tasks', async () => {
+        await request(app)
+            .post('/tasks')
+            .send({
+                title: 'Todo Task',
+                status: 'todo',
+            });
+
+        await request(app)
+            .post('/tasks')
+            .send({
+                title: 'Done Task',
+                status: 'done',
+            });
+
+        const response = await request(app)
+            .get('/tasks')
+            .query({ status: 'todo' });
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toHaveLength(1);
+        expect(response.body[0].title).toBe('Todo Task');
+        expect(response.body[0].status).toBe('todo');
+    });
 });
