@@ -200,4 +200,12 @@ describe('Task API Routes', () => {
         expect(getResponse.statusCode).toBe(200);
         expect(getResponse.body).toHaveLength(0);
     });
+
+    test('DELETE /tasks/:id should return 404 for a non-existent task', async () => {
+        const response = await request(app)
+            .delete('/tasks/non-existent-id');
+
+        expect(response.statusCode).toBe(404);
+        expect(response.body.error).toBe('Task not found');
+    });
 });
